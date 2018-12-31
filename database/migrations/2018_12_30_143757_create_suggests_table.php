@@ -4,7 +4,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+/**
+ * 意见反馈表
+ * Class CreateSuggestsTable
+ */
+class CreateSuggestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +17,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('suggests', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('openid')->unique();
-            $table->string('name');
-            $table->string('avatar');
-            $table->string('phone')->nullable();
-            $table->string('password');
+            $table->unsignedInteger('user_id');
+            $table->string('content');
+            $table->string('response')->nullable();
+            $table->boolean('is_readed')->default(false);
             $table->timestamps();
 
             $table->softDeletes();
@@ -33,6 +36,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('suggests');
     }
 }
