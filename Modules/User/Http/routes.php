@@ -7,4 +7,8 @@ Route::group(['middleware' => 'web', 'prefix' => 'user', 'namespace' => 'Modules
     Route::prefix('auth')->group(function (){
         Route::post('login','AuthController@login');
     });
+
+    //留言
+    Route::resource('suggests','SuggestController');
+
 });

@@ -12,4 +12,9 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 
+    //留言管理
+    $router->resource('suggest','Suggest\SuggestAdminController');
+
+    //用户管理
+    $router->resource('user','User\UserAdminController');
 });

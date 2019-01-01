@@ -15,9 +15,11 @@ class LogicException extends CommonException
 {
     const EXCEPTION_MAP = [
         self::EXCEPTION_USER_NOT_FOUND => '未找到该用户',
+        self::EXCEPTION_DB_ERROR => '数据库异常',
     ];
 
     const EXCEPTION_USER_NOT_FOUND = 1000;
+    const EXCEPTION_DB_ERROR = 1001;
 
 
 

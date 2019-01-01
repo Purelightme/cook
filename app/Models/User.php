@@ -34,6 +34,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /************模型关联**********/
+
+    public function suggests()
+    {
+        return $this->hasMany(Suggest::class);
+    }
+
     /************自定义方法**********/
 
     /**
@@ -43,16 +50,21 @@ class User extends Authenticatable
      * @return $this|\Illuminate\Database\Eloquent\Model|null|object|static
      * @throws LogicException
      */
-    public static function getOrCreate($openid,$userInfo)
+    public static function getOrCreate($openid, $userInfo)
     {
         $user = self::getUserByOpenid($openid);
-        if (!$user){
-            $user = User::create([
-                'openid' => $openid,
-                'avatar' => $userInfo['avatarUrl'],
-                'nickname' => $userInfo['nickName'],
-                'password' => bcrypt(self::PASSWORD),
-            ]);
+        if (!$user) {
+            $user = new self();
+            $user->openid = $openid;
+            $user->avatar = $userInfo['avatarUrl'];
+            $user->nickname = $userInfo['nickName'];
+            $user->sex = $userInfo['gender'];
+            $user->country = $userInfo['country'];
+            $user->province = $userInfo['province'];
+            $user->city = $userInfo['city'];
+            $user->password = bcrypt(self::PASSWORD);
+            if (!$user->save())
+                throw new LogicException(LogicException::EXCEPTION_DB_ERROR);
         }
         return $user;
     }
@@ -65,7 +77,7 @@ class User extends Authenticatable
     public static function getUserByOpenid($openid, $throw = false)
     {
         $model = new self();
-        $user = $model->where('openid',$openid)->first();
+        $user = $model->where('openid', $openid)->first();
         if ($throw && !$user)
             throw new LogicException(LogicException::EXCEPTION_USER_NOT_FOUND);
         return $user;
@@ -75,4 +87,12 @@ class User extends Authenticatable
     {
         return $user->createToken(self::SCENE)->accessToken;
     }
+
+    public static function options()
+    {
+        $users = self::all();
+        return array_combine($users->pluck('id')->toArray(),
+            $users->pluck('nickname')->toArray());
+    }
+
 }

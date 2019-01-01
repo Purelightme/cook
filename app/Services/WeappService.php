@@ -15,7 +15,18 @@ class WeappService
 {
     public static function init()
     {
-        return Factory::miniProgram(config('wechat'));
+        $config = [
+            'app_id' => config('wechat.mini_program.default.app_id'),
+            'secret' => config('wechat.mini_program.default.secret'),
+
+            'response_type' => 'array',
+
+            'log' => [
+                'level' => 'debug',
+                'file' => storage_path('logs').'/wechat.log',
+            ],
+        ];
+        return Factory::miniProgram($config);
     }
 
     /**
