@@ -17,4 +17,7 @@ Route::group([
 
     //用户管理
     $router->resource('user','User\UserAdminController');
+
+    //分类管理
+    $router->resource('category','Category\CategoryAdminController');
 });

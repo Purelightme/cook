@@ -11,4 +11,5 @@ Route::group(['middleware' => 'web', 'prefix' => 'user', 'namespace' => 'Modules
     //留言
     Route::resource('suggests','SuggestController');
 
+    Route::resource('comments','CommentController');
 });

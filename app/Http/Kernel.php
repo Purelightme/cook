@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ProtectCookData;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,5 +61,8 @@ class Kernel extends HttpKernel
 
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+
+        //自定义中间件
+        'sign' => ProtectCookData::class,
     ];
 }
