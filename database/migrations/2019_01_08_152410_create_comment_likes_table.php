@@ -23,8 +23,8 @@ class CreateCommentLikesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('comment_id')->reference('id')->on('comments');
-            $table->foreign('user_id')->reference('id')->on('users');
+            $table->foreign('comment_id')->references('id')->on('comments');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

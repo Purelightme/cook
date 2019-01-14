@@ -44,4 +44,14 @@ class WeappService
         $res = $app->auth->session($code);
         return $app->encryptor->decryptData($res['session_key'],$iv,$rowData);
     }
+
+    public static function generateWXACodeUnlimit($path)
+    {
+        $app = self::init();
+        $response = $app->app_code->getQrCode($path, 280);
+        if ($response instanceof \EasyWeChat\Kernel\Http\StreamResponse) {
+            $filename = $response->saveAs(public_path('imgs/weapp'), 'weapp.png');
+        }
+        return $filename;
+    }
 }

@@ -26,8 +26,8 @@ class CreateCommentsTable extends Migration
             $table->string('content')->comment('评价内容');
             $table->timestamps();
 
-            $table->foreign('cook_id')->reference('id')->on('cooks');
-            $table->foreign('user_id')->reference('id')->on('users');
+            $table->foreign('cook_id')->references('id')->on('cooks');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

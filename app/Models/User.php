@@ -41,6 +41,16 @@ class User extends Authenticatable
         return $this->hasMany(Suggest::class);
     }
 
+    public function cook_collects()
+    {
+        return $this->hasMany(CookCollect::class);
+    }
+
+    public function cooks()
+    {
+        return $this->hasMany(Cook::class);
+    }
+
     /************自定义方法**********/
 
     /**

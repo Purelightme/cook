@@ -21,7 +21,7 @@ class CreateCooksTable extends Migration
             $table->increments('id');
             $table->string('category_ids');
             $table->string('category_titles');
-            $table->string('menu_id');
+            $table->string('menu_id')->comment('mob菜谱id')->nullable();
             $table->string('title');
             $table->string('img')->nullable()->comment('主图');
             $table->string('thumbnail')->nullable()->comment('缩略图');

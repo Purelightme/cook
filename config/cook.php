@@ -11,6 +11,11 @@ return [
     //mob api配置
     'mob' => [
         'appKey' => env('MOB_APP_KEY'),
+    ],
+
+    //jisu api配置
+    'jisu' => [
+        'appKey' => env('JISU_APP_KEY')
     ]
 
 ];

@@ -34,7 +34,8 @@ class ResponseTool
     {
         return [
             'errcode' => 2000,
-            'errmsg'  => $validator->errors()->first()
+            'errmsg'  => $validator->errors()->first(),
+            'data' => $validator->errors(),
         ];
     }
 }

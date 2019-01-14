@@ -11,5 +11,13 @@ Route::group(['middleware' => 'web', 'prefix' => 'user', 'namespace' => 'Modules
     //留言
     Route::resource('suggests','SuggestController');
 
+    //评论
     Route::resource('comments','CommentController');
+
+    //收藏
+    Route::resource('cook-collects','CookCollectController')->only(['index','store']);
+    Route::delete('cook-collects','CookCollectController@destroy');
+
+    //菜谱
+    Route::resource('cooks','CookController');
 });

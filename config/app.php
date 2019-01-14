@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -181,6 +181,7 @@ return [
         \Overtrue\LaravelSocialite\ServiceProvider::class,
         \Laravel\Scout\ScoutServiceProvider::class,
         \Jacobcyl\AliOSS\AliOssServiceProvider::class,
+        \Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -232,6 +233,7 @@ return [
 
         //本项目用到的第三方package
         'Socialite' => \Overtrue\LaravelSocialite\Socialite::class,
+        'Image' => \Intervention\Image\Facades\Image::class,
 
 
     ],
