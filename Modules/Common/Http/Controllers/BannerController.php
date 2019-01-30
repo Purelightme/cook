@@ -1,27 +1,24 @@
 <?php
 
-namespace Modules\User\Http\Controllers;
+namespace Modules\Common\Http\Controllers;
 
-use App\Http\Resources\SuggestResource;
-use App\Models\Suggest;
+use App\Http\Resources\BannerResource;
+use App\Models\Banner;
 use App\Tools\Response\ResponseTool;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\User\Http\Requests\SuggestRequest;
 
-class SuggestController extends Controller
+class BannerController extends Controller
 {
     /**
-     * 留言记录
      * Display a listing of the resource.
-     * @return mixed
+     * @return array
      */
-    public function index(SuggestRequest $request)
+    public function index()
     {
-        $suggests = $request->user('api')->suggests()->latest()->paginate($request->pageSize ?? 10);
-        SuggestResource::collection($suggests);
-        return ResponseTool::buildSuccess($suggests);
+        $banners = Banner::orderByDesc('sort')->get();
+        return ResponseTool::buildSuccess(BannerResource::collection($banners));
     }
 
     /**
@@ -30,19 +27,16 @@ class SuggestController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        return view('common::create');
     }
 
     /**
-     * 留言
      * Store a newly created resource in storage.
      * @param  Request $request
-     * @return mixed
+     * @return Response
      */
-    public function store(SuggestRequest $request)
+    public function store(Request $request)
     {
-        $suggest = Suggest::newSuggest($request->user('api')->id,$request->input('content'));
-        return ResponseTool::buildSuccess();
     }
 
     /**
@@ -51,7 +45,7 @@ class SuggestController extends Controller
      */
     public function show()
     {
-        return view('user::show');
+        return view('common::show');
     }
 
     /**
@@ -60,7 +54,7 @@ class SuggestController extends Controller
      */
     public function edit()
     {
-        return view('user::edit');
+        return view('common::edit');
     }
 
     /**

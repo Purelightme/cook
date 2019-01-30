@@ -15,4 +15,10 @@ Route::group(['middleware' => 'web', 'prefix' => 'common', 'namespace' => 'Modul
     Route::get('cooks/{id}','CookController@detail');
     //菜谱搜索
     Route::get('cook/search','CookController@search');
+
+    //Banner
+    Route::resource('banners','BannerController');
+
+    //故事
+    Route::resource('stories','StoryController');
 });

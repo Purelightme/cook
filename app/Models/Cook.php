@@ -68,10 +68,15 @@ class Cook extends Model
             $img = $upload->uploadSingleFile($request->file('img'),'cooks/user/imgs');
             $cook->img = $img;
         }
-        if ($request->hasFile('step_img') && $request->has('step_img_index')){
+        if ($request->hasFile('step_img') && $request->has('step_index')){
             $stepImg = $upload->uploadSingleFile($request->file('step_img'),'cooks/user/step_imgs');
             $old = $cook->method;
-            $old[$request->step_img_index]['img'] = $stepImg;
+            $old[$request->step_index]['img'] = $stepImg;
+            $cook->method = $old;
+        }
+        if ($request->has('step_content') && $request->has('step_index')){
+            $old = $cook->method;
+            $old[$request->step_index]['step'] = $request->step_content;
             $cook->method = $old;
         }
         if ($request->has('title'))

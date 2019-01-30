@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class UserResource extends Resource
+class StoryListResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,8 @@ class UserResource extends Resource
     {
         return [
             'id' => $this->id,
-            'nickname' => $this->nickname,
-            'avatar' => $this->avatar,
-            'country' => $this->country,
-            'province' => $this->province,
-            'city' => $this->city,
-            'sex' => $this->sex,
+            'title' => $this->title,
+            'updated_at' => displayHumanTime($this->updated_at->toDateTimeString()),
         ];
     }
 }

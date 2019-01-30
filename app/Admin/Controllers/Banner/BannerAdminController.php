@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Admin\Controllers\User;
+namespace App\Admin\Controllers\Banner;
 
-use App\Http\Constant\Constant;
-use App\Models\User;
+use App\Models\Banner;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -12,7 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 
-class UserAdminController extends Controller
+class BannerAdminController extends Controller
 {
     use ModelForm;
 
@@ -72,27 +71,17 @@ class UserAdminController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(User::class, function (Grid $grid) {
+        return Admin::grid(Banner::class, function (Grid $grid) {
+
+            $grid->model()->orderByDesc('sort');
 
             $grid->id('ID')->sortable();
-            $grid->nickname('昵称');
-            $grid->avatar('头像')->enlargeimage(function (){
-                return $this->avatar;
+            $grid->img('图片')->enlargeimage(function (){
+                return $this->img;
             });
-            $grid->sex('性别')->display(function ($sex){
-                switch ($sex){
-                    case Constant::SEX_UNKNOWN:
-                        return buildLabel('danger',Constant::SEX_MAP[$sex]);
-                        break;
-                    case Constant::SEX_BOY:
-                        return buildLabel('info',Constant::SEX_MAP[$sex]);
-                        break;
-                    case Constant::SEX_GIRL:
-                        return buildLabel('success',Constant::SEX_MAP[$sex]);
-                        break;
-                }
-            });
-            $grid->created_at('注册时间');
+            $grid->path('跳转路径');
+            $grid->created_at();
+            $grid->updated_at();
         });
     }
 
@@ -103,10 +92,12 @@ class UserAdminController extends Controller
      */
     protected function form()
     {
-        return Admin::form(User::class, function (Form $form) {
+        return Admin::form(Banner::class, function (Form $form) {
 
             $form->display('id', 'ID');
-
+            $form->image('img','图片');
+            $form->text('path','跳转路径');
+            $form->number('sort','排序')->help('排序越大，越靠前');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

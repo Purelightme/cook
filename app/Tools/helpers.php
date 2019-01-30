@@ -9,6 +9,8 @@ if (!function_exists('getImageUrl')){
     function getImageUrl($name){
         if (empty($name))
             return '';
+        if (\Illuminate\Support\Str::startsWith($name,['http']))
+            return $name;
         return 'http://'.env('ENDPOINT').'/'.$name;
     }
 }
@@ -18,6 +20,8 @@ if (!function_exists('getImageUrls')){
         if (empty($names))
             return [];
         return array_map(function ($name){
+            if (\Illuminate\Support\Str::startsWith($name,['http']))
+                return $name;
             return 'http://'.env('ENDPOINT').'/'.$name;
         },$names);
     }

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Admin\Controllers\User;
+namespace App\Admin\Controllers\Story;
 
-use App\Http\Constant\Constant;
-use App\Models\User;
+use App\Models\Story;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -12,7 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 
-class UserAdminController extends Controller
+class StoryAdminController extends Controller
 {
     use ModelForm;
 
@@ -72,27 +71,15 @@ class UserAdminController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(User::class, function (Grid $grid) {
+        return Admin::grid(Story::class, function (Grid $grid) {
+
+            $grid->model()->orderByDesc('updated_at');
 
             $grid->id('ID')->sortable();
-            $grid->nickname('昵称');
-            $grid->avatar('头像')->enlargeimage(function (){
-                return $this->avatar;
+            $grid->title('标题');
+            $grid->updated_at('最后更新时间')->display(function ($updatedAt){
+                return displayHumanTime($updatedAt);
             });
-            $grid->sex('性别')->display(function ($sex){
-                switch ($sex){
-                    case Constant::SEX_UNKNOWN:
-                        return buildLabel('danger',Constant::SEX_MAP[$sex]);
-                        break;
-                    case Constant::SEX_BOY:
-                        return buildLabel('info',Constant::SEX_MAP[$sex]);
-                        break;
-                    case Constant::SEX_GIRL:
-                        return buildLabel('success',Constant::SEX_MAP[$sex]);
-                        break;
-                }
-            });
-            $grid->created_at('注册时间');
         });
     }
 
@@ -103,10 +90,11 @@ class UserAdminController extends Controller
      */
     protected function form()
     {
-        return Admin::form(User::class, function (Form $form) {
+        return Admin::form(Story::class, function (Form $form) {
 
             $form->display('id', 'ID');
-
+            $form->text('title','标题');
+            $form->ueditor('content','内容');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

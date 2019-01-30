@@ -1,27 +1,29 @@
 <?php
 
-namespace Modules\User\Http\Controllers;
+namespace Modules\Common\Http\Controllers;
 
-use App\Http\Resources\SuggestResource;
-use App\Models\Suggest;
+use App\Http\Constant\Constant;
+use App\Http\Resources\StoryDetailResource;
+use App\Http\Resources\StoryListResource;
+use App\Models\Story;
 use App\Tools\Response\ResponseTool;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\User\Http\Requests\SuggestRequest;
 
-class SuggestController extends Controller
+class StoryController extends Controller
 {
     /**
-     * 留言记录
      * Display a listing of the resource.
      * @return mixed
      */
-    public function index(SuggestRequest $request)
+    public function index(Request $request)
     {
-        $suggests = $request->user('api')->suggests()->latest()->paginate($request->pageSize ?? 10);
-        SuggestResource::collection($suggests);
-        return ResponseTool::buildSuccess($suggests);
+        $model = new Story();
+        $stories = $model->orderByDesc('updated_at')
+            ->paginate($request->pageSize ?? 30);
+        StoryListResource::collection($stories);
+        return ResponseTool::buildSuccess($stories);
     }
 
     /**
@@ -30,28 +32,26 @@ class SuggestController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        return view('common::create');
     }
 
     /**
-     * 留言
      * Store a newly created resource in storage.
      * @param  Request $request
-     * @return mixed
+     * @return Response
      */
-    public function store(SuggestRequest $request)
+    public function store(Request $request)
     {
-        $suggest = Suggest::newSuggest($request->user('api')->id,$request->input('content'));
-        return ResponseTool::buildSuccess();
     }
 
     /**
      * Show the specified resource.
-     * @return Response
+     * @return mixed
      */
-    public function show()
+    public function show(Request $request,$id)
     {
-        return view('user::show');
+        $story = Story::find($id);
+        return new StoryDetailResource($story);
     }
 
     /**
@@ -60,7 +60,7 @@ class SuggestController extends Controller
      */
     public function edit()
     {
-        return view('user::edit');
+        return view('common::edit');
     }
 
     /**

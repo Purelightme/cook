@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\CookCollect;
 use Illuminate\Http\Resources\Json\Resource;
 
 class CookDetailResource extends Resource
@@ -21,6 +22,8 @@ class CookDetailResource extends Resource
             'img' => $this->img,
             'ingredients' => $this->ingredients,
             'method' => $this->method,
+            'collected' => \request()->user('api') ?
+                CookCollect::isCollected(\request()->user('api')->id,$this->id) : false,
         ];
     }
 }

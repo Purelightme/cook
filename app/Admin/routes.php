@@ -20,4 +20,10 @@ Route::group([
 
     //分类管理
     $router->resource('category','Category\CategoryAdminController');
+
+    //Banner
+    $router->resource('banner','Banner\BannerAdminController');
+
+    //故事
+    $router->resource('story','Story\StoryAdminController');
 });
